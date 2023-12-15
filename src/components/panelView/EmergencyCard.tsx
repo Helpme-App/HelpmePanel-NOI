@@ -93,7 +93,7 @@ interface ReportProps {
                     <h1>{emergency.user.name} </h1>
                     <p className="text-sm font-bold">{`Emergencia - Codigo ${emergency.type.code}`}</p>
                     </div>
-                    <div className="">
+                    <div>
                     <p className="text-xs">{emergency.createdAt}</p>
                     </div>
                 </div>
