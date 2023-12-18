@@ -1,4 +1,5 @@
 import { useGetEmergenciasQuery } from "@/redux/services/features/emergenciasApi";
+import { useState } from "react";
 import { setMark } from "@/redux/services/features/MapSlice";
 import { useAppDispatch } from "@/redux/hooks";
 
@@ -43,7 +44,6 @@ interface ReportProps {
     status: Status;
 }
 
-    
     const dispatch = useAppDispatch();
 
     const {data, error, isLoading} = useGetEmergenciasQuery(null, {
@@ -51,9 +51,12 @@ interface ReportProps {
       });  
 
    
+    const dispatchMark = () => {
+        dispatch(setMark({ lat: 0, lng: 0 }));
+    }
 
     const pendingReports = data?.filter((report: ReportProps | any) => report.status.state === "Pending");
-    
+
     
     const determineColorClass = (colorClass: string) => {
         switch (colorClass) {
@@ -80,22 +83,29 @@ interface ReportProps {
       return <div>{`${error}`}</div>;
     }
 
+
     return(
      <div>
        {
         sortedReports?.map((emergency: ReportProps)=>{
             return(
                 <div key={emergency.id} 
-                className={`${determineColorClass(emergency.type.code)}  rounded-lg  border-2 flex flex-row items-center grid-cols-2 p-2 m-2 cursor-pointer`} 
+                className={`${determineColorClass(emergency.type.code)}  rounded-lg  border-2 flex flex-row items-center grid-cols-2 p-2 m-2 cursor-pointer`}
                 onClick={()=>{dispatch(setMark({lat: emergency.location.lat, lng: emergency.location.long}))}}
-                >
+                >   
+                   {/*Header*/} 
                     <div className=" flex flex-col items-start h-full w-full ">
-                    <h1>{emergency.user.name} </h1>
-                    <p className="text-sm font-bold">{`Emergencia - Codigo ${emergency.type.code}`}</p>
+                      <h1>{emergency.user.name} </h1>
+                      <p className="text-sm font-bold">{`Emergencia - Codigo ${emergency.type.code}`}</p>
                     </div>
-                    <div>
-                    <p className="text-xs">{emergency.createdAt}</p>
-                    </div>
+                    <div className ="flex flex-col items-end">
+                      <p className="text-xs w-full">{emergency.createdAt}</p>
+                    </div>  
+
+                    {/*Body*/}  
+
+
+                    {/*agent funcions section*/}                
                 </div>
             )
         })

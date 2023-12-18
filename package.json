@@ -1,5 +1,5 @@
 {
-  "name": "helpmepanel-university",
+  "name": "helpmepanel-noi",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.0",
     "@react-google-maps/api": "^2.19.2",
     "@reduxjs/toolkit": "^1.9.7",
     "next": "14.0.3",
