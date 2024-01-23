@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
 interface LoginProps {}
@@ -42,18 +41,34 @@ const Login: React.FC<LoginProps> = () => {
     };
 
     return (
-    <div className="flex items-center justify-center h-screen">
-        <div className="bg-white rounded w-full max-w-[420px] p-4 md:p-8">
+    <div className="flex h-screen">
+        <div className="w-1/2 bg-pink-400 ">
+        <div className="absolute left-[12%] top-[25%] w-[28%]">
+          <div className="flex mb-3 ">
+            <img className="w-[12%]" src="Logowhite.svg"></img>
+            <img className="ml-3 w-[42%]" src="Helpmewhite.svg"></img>
+          </div>
+          <h4 className="font-roboto text-white text-xl xl:text-2xl 2xl:text-3xl ">
+            Cambiando el Futuro de la Seguridad en América Latina
+          </h4>
+        </div>
+
+        <img
+          className="w-[566px] h-[554px] absolute bottom-[-12%] left-[-3%]"
+          src="world.svg"
+        ></img>
+      </div>
+        <div className="w-1/2 bg-white flex items-center justify-center">
+        <div className="bg-white rounded w-[420px] xl:w-[445px] 2xl:w-[490px]">
         <img
             src="Group.svg"
             alt="icono"
-            className="mb-8"
-            style={{ width: "29.74px", height: "40-px" }}
+            className="mb-8 w-[10%]"
         />
-        <h4 className="font-roboto text-center text-grayblue-900 font-bold text-xl mb-4">
+        <h4 className="font-roboto text-center text-grayblue-900 font-bold text-2xl xl:text-3xl 2xl:text-4xl mb-4">
             Hola, bienvenido a Helpme!
         </h4>
-        <h4 className="font-roboto text-grayblue-900 text-sm text-left font-semibold mb-4">
+        <h4 className="font-roboto text-grayblue-900 text-sm xl:text-base 2xl:text-lg text-left font-semibold mb-4">
             Para continuar, te invitamos a iniciar sesión
         </h4>
 
@@ -61,7 +76,7 @@ const Login: React.FC<LoginProps> = () => {
             <div className="mb-4">
             <label
                 htmlFor="email"
-                className="text-sm font-roboto font-semibold text-grayblue-700 mb-1"
+                className="text-sm xl:text-base 2xl:text-lg font-roboto font-semibold text-grayblue-700 mb-1"
             >
                 Correo Electrónico
             </label>
@@ -70,11 +85,11 @@ const Login: React.FC<LoginProps> = () => {
                 id="email"
                 name="email"
                 placeholder="ejemplo@email.com"
-                className={`w-full h-10 border font-roboto rounded-md transition-all focus:outline-none ${
+                className={`w-full h-10 border pl-2 font-roboto rounded-md transition-all focus:outline-none ${
                 isInputFocused
                     ? "border-gray-500 text-grayblue-700"
                     : "border-pink-200 text-grayblue-700"
-                } placeholder:font-roboto placeholder:text-sm placeholder:font-normal placeholder-grayblue-900 placeholder-opacity-50`}
+                } placeholder:font-roboto placeholder:text-sm placeholder:font-normal  placeholder-grayblue-900 placeholder-opacity-50`}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
                 required
@@ -84,7 +99,7 @@ const Login: React.FC<LoginProps> = () => {
             <div className="mb-2">
             <label
                 htmlFor="password"
-                className="text-sm font-semibold font-roboto text-grayblue-700 mb-1"
+                className="text-sm xl:text-base 2xl:text-lg font-semibold font-roboto text-grayblue-700 mb-1"
             >
                 Contraseña
             </label>
@@ -92,7 +107,7 @@ const Login: React.FC<LoginProps> = () => {
                 type="password"
                 id="password"
                 name="password"
-                className={`w-full h-10 border font-roboto rounded-md transition-all focus:outline-none
+                className={`w-full h-10 pl-2 border font-roboto rounded-md transition-all focus:outline-none
                     ${
                         isInputFocused
                         ? "border-gray-500 text-grayblue-700"
@@ -147,6 +162,7 @@ const Login: React.FC<LoginProps> = () => {
             </a>
         </p>
         </div>
+    </div>
     </div>
     );
 };

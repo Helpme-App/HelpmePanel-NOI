@@ -4,7 +4,7 @@ import SidebarNavigation from "@/components/navBar";
 import { useLoadScript } from "@react-google-maps/api";
 import MapView from "@/components/panelView/MapView";
 import EmergenciesContainer from "@/components/panelView/EmergenciesContainer";
-
+import AgentContainer from "@/components/panelView/agentesContainer";
 
 const PanelPage: React.FC = () => {
 
@@ -17,18 +17,22 @@ const PanelPage: React.FC = () => {
 
     return (
 
-        
+        <div>
         <div className="flex">
-          <div className="absolute z-10">
-             <SidebarNavigation />
-          </div>
-          <div className="z-0 relative">
-             <MapView />
-          </div>
-          <div className="z-0 relative">
-             <EmergenciesContainer />
-          </div>
+            <div className="absolute z-10">
+                <SidebarNavigation />
+            </div>
+            <div className="z-0 relative">
+                <MapView />
+            </div>
+            <div className="z-0 relative">
+            <EmergenciesContainer />
+            </div>
         </div>
+        <div className="z-0 relative">
+            <AgentContainer />
+        </div>
+    </div>
         
     );
     }

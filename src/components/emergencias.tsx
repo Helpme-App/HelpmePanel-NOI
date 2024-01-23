@@ -51,7 +51,7 @@ const Reportes: React.FC = ()  => {
     return isLoading ? <div>Loading...</div> : isError ? <div>{`${error}`}</div> : (
         <div className="absolute mt-[45px] ml-20 2xl:ml-[120px] w-[1120px] 2xl:w-[1480px] h-[373px] 2xl:h-[420px] rounded-lg bg-white overflow-hidden">
             <h4 className="text-lg ml-4 2xl:ml-6 mt-6 mb-6 text-grayblue-700 font-roboto font-semibold">
-                Historial de reportes de emergencias
+                Historial de emergencias
             </h4>
             <div className="w-full h-[40px] 2xl:h-[50px] mb-4 gap-4 flex items-center">
                 <input

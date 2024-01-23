@@ -1,11 +1,11 @@
 import { useGetEmergenciasQuery } from "@/redux/services/features/emergenciasApi";
-import { useState } from "react";
 import { setMark } from "@/redux/services/features/MapSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import Accordion from "./Accordion";
+import { log } from "console";
 
 
-const EmergencyCard = () => {
-  interface Location {
+interface Location {
     container: string;
     address: string;
     floor: string;
@@ -34,6 +34,7 @@ interface Status {
   
 interface ReportProps {
     id: string;
+    observations: string;
     createdAt: string;
     type: Type;
     asignation: string;
@@ -44,20 +45,36 @@ interface ReportProps {
     status: Status;
 }
 
+const EmergencyCard = () => {
+    
+ 
+    // Redux toolkit
     const dispatch = useAppDispatch();
 
+    //Fetching Data
     const {data, error, isLoading} = useGetEmergenciasQuery(null, {
         pollingInterval: 15000,
       });  
 
-   
-    const dispatchMark = () => {
-        dispatch(setMark({ lat: 0, lng: 0 }));
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    if (error){
+      return <div>{`${error}`}</div>;
     }
 
+    console.log(data)
+
+    //Filtering Data
     const pendingReports = data?.filter((report: ReportProps | any) => report.status.state === "Pending");
 
-    
+    //Sorting Data
+    const sortedReports = pendingReports?.sort((a: ReportProps , b: ReportProps) => {
+        const colorOrder = ["Rojo", "Amarillo", "Azul", "Otro"];
+        return colorOrder.indexOf(a.type.code) - colorOrder.indexOf(b.type.code);
+  });
+
+    //Determine Data Color 
     const determineColorClass = (colorClass: string) => {
         switch (colorClass) {
             case "Azul":
@@ -70,49 +87,39 @@ interface ReportProps {
                 return "border-gray-200";
     }
 };
-
-    const sortedReports = pendingReports?.sort((a: ReportProps , b: ReportProps) => {
-        const colorOrder = ["Rojo", "Amarillo", "Azul", "Otro"];
-        return colorOrder.indexOf(a.type.code) - colorOrder.indexOf(b.type.code);
-  });
-
-    if (isLoading) {
-        return <div>Loading...</div>;
+    
+    
+    
+   // click functions
+    const handleClick = ({ lat, lng }: { lat: string; lng: string },) => {
+        dispatchMark({ lat: lat, lng: lng });
     }
-    if (error){
-      return <div>{`${error}`}</div>;
+   
+   
+
+    const dispatchMark = ({ lat, lng }: { lat: string; lng: string }) => {
+        dispatch(setMark({ lat: lat, lng: lng }));
     }
 
+   
 
     return(
      <div>
        {
-        sortedReports?.map((emergency: ReportProps)=>{
+        sortedReports?.map((emergency: ReportProps )=>{
             return(
                 <div key={emergency.id} 
-                className={`${determineColorClass(emergency.type.code)}  rounded-lg  border-2 flex flex-row items-center grid-cols-2 p-2 m-2 cursor-pointer`}
-                onClick={()=>{dispatch(setMark({lat: emergency.location.lat, lng: emergency.location.long}))}}
+                className={`${determineColorClass(emergency.type.code)}  rounded-lg  border-2 p-2 m-2 cursor-pointer`}
+                onDoubleClick={()=>(handleClick({lat: emergency.location.lat, lng: emergency.location.long}))}
                 >   
-                   {/*Header*/} 
-                    <div className=" flex flex-col items-start h-full w-full ">
-                      <h1>{emergency.user.name} </h1>
-                      <p className="text-sm font-bold">{`Emergencia - Codigo ${emergency.type.code}`}</p>
-                    </div>
-                    <div className ="flex flex-col items-end">
-                      <p className="text-xs w-full">{emergency.createdAt}</p>
-                    </div>  
-
-                    {/*Body*/}  
-
-
-                    {/*agent funcions section*/}                
+                 <Accordion emergency={emergency} />
                 </div>
             )
         })
        }
      </div>
     )
-     
-
-    }
+}
     export default EmergencyCard;
+
+    

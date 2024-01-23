@@ -1,5 +1,11 @@
-import Image from "next/image";
+import Login from "@/components/login";
 
-export default function Home() {
-  return <main className=""></main>;
+const LoginPage: React.FC = () => {
+    return(
+    <div>
+        <Login />
+    </div>
+    );
 }
+
+export default LoginPage;
